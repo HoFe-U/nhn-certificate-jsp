@@ -1,7 +1,0 @@
-com\nhnacademy\certificate\config\JpaConfig.class
-com\nhnacademy\certificate\Base.class
-com\nhnacademy\certificate\config\RootConfig.class
-com\nhnacademy\certificate\config\WebAppInitializer.class
-com\nhnacademy\certificate\repository\RepositoryBase.class
-com\nhnacademy\certificate\controller\ControllerBase.class
-com\nhnacademy\certificate\config\WebConfig.class

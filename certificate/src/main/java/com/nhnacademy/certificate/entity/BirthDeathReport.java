@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

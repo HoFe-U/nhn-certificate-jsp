@@ -1,9 +1,11 @@
 package com.nhnacademy.certificate.config;
 
 import com.nhnacademy.certificate.repository.RepositoryBase;
+
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -18,7 +20,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 public class JpaConfig {
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(DataSource dataSource) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
         emf.setPackagesToScan("com.nhnacademy.certificate.entity");
@@ -28,9 +30,16 @@ public class JpaConfig {
         return emf;
     }
 
+    private JpaVendorAdapter jpaVendorAdapters() {
+        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
+        hibernateJpaVendorAdapter.setDatabase(Database.MYSQL);
+
+        return hibernateJpaVendorAdapter;
+    }
+
     private Properties jpaProperties() {
         Properties jpaProperties = new Properties();
-        jpaProperties.setProperty("hibernate.show_sql", "true");
+        jpaProperties.setProperty("hibernate.show_sql", "false");
         jpaProperties.setProperty("hibernate.format_sql", "true");
         jpaProperties.setProperty("hibernate.use_sql_comments", "true");
         jpaProperties.setProperty("hibernate.globally_quoted_identifiers", "true");
@@ -39,19 +48,12 @@ public class JpaConfig {
         return jpaProperties;
     }
 
-    private JpaVendorAdapter jpaVendorAdapters() {
-        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-        hibernateJpaVendorAdapter.setDatabase(Database.MYSQL);
-
-        return hibernateJpaVendorAdapter;
-    }
-
     @Bean
-    public PlatformTransactionManager transactionManager(
-        EntityManagerFactory entityManagerFactory) {
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
 
         return transactionManager;
     }
+
 }

@@ -1,9 +1,13 @@
 package com.nhnacademy.certificate.service;
 
+import com.nhnacademy.certificate.domain.ModifyResidentRequest;
+import com.nhnacademy.certificate.domain.ResidentRegister;
 import com.nhnacademy.certificate.entity.Resident;
 
 public interface ResidentService {
-    Resident registerResident(Resident resident);
+    Resident registerResident(ResidentRegister resident);
 
-    boolean modifyResident(Resident resident, Integer serialNo);
+    Resident modifyResident(ModifyResidentRequest resident, Integer serialNo);
+
+    Resident getResident(Integer serialNo);
 }
