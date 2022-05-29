@@ -26,7 +26,7 @@ public class BirthDeathReport {
     @ManyToOne
     @JoinColumn(name = "resident_serial_number")
     private Resident resident;
-
+    @Column(name = "birth_death_report_date")
     private LocalDateTime birthDeathReportDate;
 
     @Column(name = "birth_report_qualifications_code")
@@ -35,7 +35,9 @@ public class BirthDeathReport {
     @Column(name = "death_report_qualifications_code")
     private String deathQualificationCode;
 
+    @Column(name = "email_address")
     private String emailAddress;
 
+    @Column(name = "phone_number")
     private String phoneNumber;
 }

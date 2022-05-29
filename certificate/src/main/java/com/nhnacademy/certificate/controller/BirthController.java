@@ -1,7 +1,7 @@
 package com.nhnacademy.certificate.controller;
 
-import com.nhnacademy.certificate.domain.BirthAndDeathRegister;
-import com.nhnacademy.certificate.domain.BirthModify;
+import com.nhnacademy.certificate.domain.BirthRegister;
+import com.nhnacademy.certificate.domain.BirthDeathModify;
 import com.nhnacademy.certificate.entity.BirthDeathReport;
 import com.nhnacademy.certificate.exception.NoResidentException;
 import com.nhnacademy.certificate.service.BirthService;
@@ -36,8 +36,9 @@ public class BirthController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public BirthDeathReport birthRegistReport(@ModelAttribute("birth") Integer serialNo,
-                                              @Valid @RequestBody BirthAndDeathRegister birthDeathReportRegister,
+    public BirthDeathReport addBirthReport(@ModelAttribute("birth") Integer serialNo,
+                                              @Valid @RequestBody
+                                                  BirthRegister birthDeathReportRegister,
                                               BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationException();
@@ -50,7 +51,7 @@ public class BirthController {
     @PutMapping("/{targetSerialNumber}")
     public BirthDeathReport fixBirthReport(@ModelAttribute("birth") Integer serialNo,
                                @PathVariable("targetSerialNumber") Integer targetSerialNo,
-                               @Valid @RequestBody BirthModify birthModify,
+                               @Valid @RequestBody BirthDeathModify birthModify,
                                BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {

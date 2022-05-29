@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
-public class BirthAndDeathRegister {
+public class BirthRegister {
+    //TODO: 신고자 이름과 주민번호로 일련번호를 알아내야할것같다.
     @NotNull
     @Min(1)
     Integer residentSeralNo;

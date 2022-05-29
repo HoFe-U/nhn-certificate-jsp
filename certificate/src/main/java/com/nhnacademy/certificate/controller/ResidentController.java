@@ -23,7 +23,8 @@ public class ResidentController {
     //TODO: 반환값 오류날수도 있을듯
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Resident addResident(@Valid @RequestBody ResidentRegister addRequest, BindingResult bindingResult) {
+    public Resident addResident(@Valid @RequestBody ResidentRegister addRequest,
+                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException();
         }

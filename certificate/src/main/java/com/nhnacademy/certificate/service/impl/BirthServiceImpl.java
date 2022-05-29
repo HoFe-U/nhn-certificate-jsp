@@ -1,7 +1,7 @@
 package com.nhnacademy.certificate.service.impl;
 
-import com.nhnacademy.certificate.domain.BirthAndDeathRegister;
-import com.nhnacademy.certificate.domain.BirthModify;
+import com.nhnacademy.certificate.domain.BirthRegister;
+import com.nhnacademy.certificate.domain.BirthDeathModify;
 import com.nhnacademy.certificate.entity.BirthDeathReport;
 import com.nhnacademy.certificate.entity.Resident;
 import com.nhnacademy.certificate.entity.pk.BirthDeathReportPK;
@@ -27,7 +27,7 @@ public class BirthServiceImpl implements BirthService {
     //TODO : 중복 구문 메소드 분리해야됨
     @Transactional
     @Override
-    public BirthDeathReport createBirth(Integer serialNo, BirthAndDeathRegister register) {
+    public BirthDeathReport createBirth(Integer serialNo, BirthRegister register) {
         BirthDeathReportPK pk = new BirthDeathReportPK();
         pk.setBirthDeathCode(register.getReportType());
         pk.setResidentNo(register.getResidentSeralNo());
@@ -50,17 +50,17 @@ public class BirthServiceImpl implements BirthService {
 
     @Transactional
     @Override
-    public BirthDeathReport modifyBirth(Integer serialNo, BirthModify birthModify, Integer targetSerialNo) {
+    public BirthDeathReport modifyBirth(Integer serialNo, BirthDeathModify birthModify, Integer targetSerialNo) {
         BirthDeathReportPK pk = new BirthDeathReportPK();
         residentRepository.findById(serialNo).orElseThrow(NoResidentException::new);
-        Resident resident = residentRepository.findById(birthModify.getResidentSerialNo()).orElseThrow(NoResidentException::new);
+        Resident resident = residentRepository.checkResidentExist(birthModify.getResidentName(),birthModify.getRegistrationNo()).orElseThrow(NoResidentException::new);
 
         pk.setBirthDeathCode("출생");
         pk.setResidentNo(targetSerialNo);
         pk.setReportResidentNo(serialNo);
 
         BirthDeathReport birthDeathReport = birthDeathReportRepository.findById(pk).orElseThrow(NoReportException::new);
-        pk.setResidentNo(birthModify.getResidentSerialNo());
+        pk.setResidentNo(resident.getResidentNo());
 
         birthDeathReport.setPhoneNumber(birthModify.getPhoneNo());
         birthDeathReport.setEmailAddress(birthModify.getEmail());

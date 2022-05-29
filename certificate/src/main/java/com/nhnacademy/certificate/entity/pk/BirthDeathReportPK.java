@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
 @Getter
 @Setter
 public class BirthDeathReportPK implements Serializable {
-
+    @Column(name = "resident_serial_number")
     private Integer residentNo;
 
     @Column(name = "birth_death_type_code")

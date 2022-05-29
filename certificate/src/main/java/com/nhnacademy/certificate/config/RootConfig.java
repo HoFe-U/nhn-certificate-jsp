@@ -17,14 +17,12 @@ public class RootConfig {
     @Bean
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(com.mysql.jdbc.Driver.class.getName());
+        dataSource.setDriverClassName(com.mysql.cj.jdbc.Driver.class.getName());
         dataSource.setUrl("jdbc:mysql://133.186.211.156:3306/nhn_academy_16");
         dataSource.setUsername("nhn_academy_16");
         dataSource.setPassword("ANQDj5vXfM@1vTo@");
         dataSource.setInitialSize(2);
-        dataSource.setMaxTotal(2);
-        dataSource.setMinIdle(10);
-        dataSource.setMaxIdle(10);
+        dataSource.setMaxTotal(10);
 
         dataSource.setMaxWaitMillis(1000);
 

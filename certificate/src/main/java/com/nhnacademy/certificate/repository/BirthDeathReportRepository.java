@@ -5,4 +5,7 @@ import com.nhnacademy.certificate.entity.pk.BirthDeathReportPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BirthDeathReportRepository extends JpaRepository<BirthDeathReport, BirthDeathReportPK> {
+
 }
+
+

@@ -31,6 +31,7 @@ public class ResidentServiceImpl implements ResidentService {
         resident.setGenderCode(addRequest.getGender());
         resident.setBirthDate(addRequest.getBirthDate());
         resident.setRegistrationAddress(addRequest.getRegistrationAddress());
+        resident.setBirthPlaceCode(addRequest.getBirthPlaceCode());
         return residentRepository.save(resident);
     }
 

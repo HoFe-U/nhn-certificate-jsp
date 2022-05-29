@@ -5,10 +5,14 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class BirthModify {
+public class BirthDeathModify {
 
     @NotNull
-    Integer residentSerialNo;
+    String registrationNo;
+
+    @NotNull
+    String residentName;
+
     @NotNull
     String qualificationCode;
 
