@@ -8,7 +8,7 @@ public interface FamilyRelationshipService {
 
     FamilyRelationship createRelationship(Integer serialNo, FamilyRelationshipRegister familyRelationshipRegister);
 
-    FamilyRelationship modifyRelationship(Integer serialNo, Integer fmSerialNo, FamilyRelationshipModify familyRelationshipModify);
+    void modifyRelationship(Integer serialNo, Integer fmSerialNo, FamilyRelationshipModify familyRelationshipModify);
 
     void deleteRelationship(Integer serialNo, Integer fmSerialNo);
 }

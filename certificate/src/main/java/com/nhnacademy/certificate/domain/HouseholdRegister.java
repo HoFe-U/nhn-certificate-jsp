@@ -1,5 +1,7 @@
 package com.nhnacademy.certificate.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -9,17 +11,15 @@ import lombok.Data;
 
 @Data
 public class HouseholdRegister {
-    @Min(2)
     @NotNull
     String houseHoldName;
 
     @NotNull
-    @Min(14)
     String houseHoldRegistrationNo;
 
     @NotNull
-    @Temporal(TemporalType.DATE)
-    Date compositionDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    LocalDate compositionDate;
 
     @NotNull
     String compositionCode;

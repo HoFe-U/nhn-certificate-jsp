@@ -8,12 +8,6 @@ import javax.validation.constraints.NotNull;
 public class BirthDeathModify {
 
     @NotNull
-    String registrationNo;
-
-    @NotNull
-    String residentName;
-
-    @NotNull
     String qualificationCode;
 
     String email;

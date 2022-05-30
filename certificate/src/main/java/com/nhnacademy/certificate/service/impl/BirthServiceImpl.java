@@ -50,33 +50,30 @@ public class BirthServiceImpl implements BirthService {
 
     @Transactional
     @Override
-    public BirthDeathReport modifyBirth(Integer serialNo, BirthDeathModify birthModify, Integer targetSerialNo) {
-        BirthDeathReportPK pk = new BirthDeathReportPK();
+    public void modifyBirth(Integer serialNo, BirthDeathModify birthModify, Integer targetSerialNo) {
         residentRepository.findById(serialNo).orElseThrow(NoResidentException::new);
-        Resident resident = residentRepository.checkResidentExist(birthModify.getResidentName(),birthModify.getRegistrationNo()).orElseThrow(NoResidentException::new);
-
+        residentRepository.findById(targetSerialNo).orElseThrow(NoResidentException::new);
+        BirthDeathReportPK pk = new BirthDeathReportPK();
+        pk.setResidentNo(serialNo);
+        pk.setReportResidentNo(targetSerialNo);
         pk.setBirthDeathCode("출생");
-        pk.setResidentNo(targetSerialNo);
-        pk.setReportResidentNo(serialNo);
 
-        BirthDeathReport birthDeathReport = birthDeathReportRepository.findById(pk).orElseThrow(NoReportException::new);
-        pk.setResidentNo(resident.getResidentNo());
-
-        birthDeathReport.setPhoneNumber(birthModify.getPhoneNo());
+        BirthDeathReport birthDeathReport =
+            birthDeathReportRepository.findById(pk).orElseThrow(NoReportException::new);
         birthDeathReport.setEmailAddress(birthModify.getEmail());
+        birthDeathReport.setPhoneNumber(birthModify.getPhoneNo());
         birthDeathReport.setBirthQualificationCode(birthModify.getQualificationCode());
-        birthDeathReport.setResident(resident);
 
-       return birthDeathReportRepository.save(birthDeathReport);
+        birthDeathReportRepository.flush();
     }
 
     @Transactional
     @Override
     public void deleteBirth(Integer serialNo, Integer targetSerialNo) {
         BirthDeathReportPK pk = new BirthDeathReportPK();
-        pk.setReportResidentNo(serialNo);
+        pk.setResidentNo(serialNo);
         pk.setBirthDeathCode("출생");
-        pk.setResidentNo(targetSerialNo);
+        pk.setReportResidentNo(targetSerialNo);
 
         BirthDeathReport birthDeathReport = birthDeathReportRepository.findById(pk).orElseThrow(NoReportException::new);
         birthDeathReportRepository.delete(birthDeathReport);

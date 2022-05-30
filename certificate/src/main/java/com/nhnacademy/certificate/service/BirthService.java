@@ -9,7 +9,7 @@ import javax.validation.Valid;
 public interface BirthService {
     BirthDeathReport createBirth(Integer serialNo, @Valid BirthRegister birthDeathReportRegister);
 
-    BirthDeathReport modifyBirth(Integer serialNo, BirthDeathModify birthModify, Integer targetSerialNo);
+    void modifyBirth(Integer serialNo, BirthDeathModify birthModify, Integer targetSerialNo);
 
     void deleteBirth(Integer serialNo, Integer targetSerialNo);
 }

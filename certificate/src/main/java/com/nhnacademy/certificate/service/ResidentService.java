@@ -7,7 +7,7 @@ import com.nhnacademy.certificate.entity.Resident;
 public interface ResidentService {
     Resident registerResident(ResidentRegister resident);
 
-    Resident modifyResident(ModifyResidentRequest resident, Integer serialNo);
+    void modifyResident(ModifyResidentRequest resident, Integer serialNo);
 
     Resident getResident(Integer serialNo);
 }

@@ -25,40 +25,46 @@ public class FamilyRelationshipServiceImpl implements FamilyRelationshipService 
 
     @Transactional
     @Override
-    public FamilyRelationship createRelationship(Integer serialNo, FamilyRelationshipRegister familyRelationshipRegister) {
+    public FamilyRelationship createRelationship(Integer serialNo,
+                                                 FamilyRelationshipRegister familyRelationshipRegister) {
+        Resident resident =
+            residentRepository.findById(serialNo).orElseThrow(NoResidentException::new);
+        Resident fmResident =
+            residentRepository.findById(familyRelationshipRegister.getFamilySerialNo())
+                .orElseThrow(NoResidentException::new);
+
         FamilyRelationship familyRelationship = new FamilyRelationship();
-        FamilyRelationShipPk familyRelationShipPk = new FamilyRelationShipPk();
-        Resident resident = residentRepository.findById(serialNo).orElseThrow(NoResidentException::new);
+        FamilyRelationShipPk pk = new FamilyRelationShipPk();
 
-        familyRelationShipPk.setBaseResidentNo(resident.getResidentNo());
-        familyRelationShipPk.setFamilyResidentNo(familyRelationshipRegister.getFamilySerialNo());
 
-        familyRelationship.setFamilyRelationCode(familyRelationshipRegister.getRelationship());
+        pk.setFamilyResidentNo(fmResident.getResidentNo());
+        pk.setBaseResidentNo(resident.getResidentNo());
+
+        familyRelationship.setFamilyRelationShipPk(pk);
         familyRelationship.setResident(resident);
-        familyRelationship.setFamilyRelationShipPk(familyRelationShipPk);
+        familyRelationship.setFamilyRelationCode(familyRelationshipRegister.getRelationship());
 
-        return repository.save(familyRelationship);
+        return repository.saveAndFlush(familyRelationship);
     }
 
-    //TODO : repository 에 업로드를 안해도 바뀌냐
     @Transactional
     @Override
-    public FamilyRelationship modifyRelationship(Integer serialNo, Integer fmSerialNo, FamilyRelationshipModify familyRelationshipModify) {
+    public void modifyRelationship(Integer serialNo, Integer fmSerialNo, FamilyRelationshipModify familyRelationshipModify) {
         FamilyRelationShipPk pk = new FamilyRelationShipPk();
-        pk.setFamilyResidentNo(serialNo);
+        pk.setBaseResidentNo(serialNo);
         pk.setFamilyResidentNo(fmSerialNo);
 
         FamilyRelationship familyRelationship = repository.findById(pk).orElseThrow(NoRelationShip::new);
         familyRelationship.setFamilyRelationCode(familyRelationshipModify.getRelationship());
 
-        return familyRelationship;
+        repository.flush();
     }
 
     @Transactional
     @Override
     public void deleteRelationship(Integer serialNo, Integer fmSerialNo) {
         FamilyRelationShipPk pk = new FamilyRelationShipPk();
-        pk.setFamilyResidentNo(serialNo);
+        pk.setBaseResidentNo(serialNo);
         pk.setFamilyResidentNo(fmSerialNo);
         if (repository.findById(pk).isEmpty()) {
             throw new NoRelationShip();

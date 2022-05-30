@@ -26,7 +26,7 @@ public class HouseholdController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Household householdRegist(@Valid @RequestBody HouseholdRegister householdRegister,
+    public Household createHousehold(@Valid @RequestBody HouseholdRegister householdRegister,
                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationException();
@@ -36,7 +36,7 @@ public class HouseholdController {
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("{householdSerialNumber}")
-    public void householdRemove(@PathVariable Integer serialNo){
+    public void householdRemove(@PathVariable("householdSerialNumber") Integer serialNo){
         service.deleteHousehold(serialNo);
     }
 }

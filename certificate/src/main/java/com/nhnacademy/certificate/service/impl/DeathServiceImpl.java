@@ -11,6 +11,7 @@ import com.nhnacademy.certificate.exception.NoResidentException;
 import com.nhnacademy.certificate.repository.BirthDeathReportRepository;
 import com.nhnacademy.certificate.repository.ResidentRepository;
 import com.nhnacademy.certificate.service.DeathService;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +22,6 @@ public class DeathServiceImpl implements DeathService {
 
     public DeathServiceImpl(BirthDeathReportRepository repository, BirthDeathReportRepository deathReportRepository, ResidentRepository residentRepository) {
         this.deathReportRepository = deathReportRepository;
-
         this.residentRepository = residentRepository;
     }
 
@@ -39,7 +39,10 @@ public class DeathServiceImpl implements DeathService {
         birthDeathReportPK.setBirthDeathCode("사망");
         birthDeathReportPK.setReportResidentNo(reportSerialNo);
         birthDeathReportPK.setResidentNo(resident.getResidentNo());
-        deathReportRepository.findById(birthDeathReportPK).orElseThrow(AlreadyExistsException::new);
+
+        if (deathReportRepository.existsById(birthDeathReportPK)) {
+            throw new AlreadyExistsException();
+        }
         //이미 사망신고를 했는지 확인
 
         resident.setDeathDate(register.getDeathDate());
@@ -59,37 +62,35 @@ public class DeathServiceImpl implements DeathService {
         return deathReportRepository.save(birthDeathReport);
     }
 
+    @Modifying
     @Transactional
     @Override
-    public BirthDeathReport modifyDeath(Integer reportSerialNo, BirthDeathModify birthModify,
+    public void modifyDeath(Integer serialNo, BirthDeathModify birthModify,
                                         Integer targetSerialNo) {
-        residentRepository.findById(reportSerialNo).orElseThrow(NoResidentException::new);
+        residentRepository.findById(serialNo).orElseThrow(NoResidentException::new);
         residentRepository.findById(targetSerialNo).orElseThrow(NoResidentException::new);
-        Resident resident = residentRepository.checkResidentExist(birthModify.getResidentName(),
-            birthModify.getRegistrationNo()).orElseThrow(NoResidentException::new);
 
         BirthDeathReportPK birthDeathReportPK = new BirthDeathReportPK();
         birthDeathReportPK.setBirthDeathCode("사망");
-        birthDeathReportPK.setReportResidentNo(reportSerialNo);
-        birthDeathReportPK.setResidentNo(targetSerialNo);
+        birthDeathReportPK.setReportResidentNo(targetSerialNo);
+        birthDeathReportPK.setResidentNo(serialNo);
 
         BirthDeathReport birthDeathReport =
             deathReportRepository.findById(birthDeathReportPK).orElseThrow(NoReportException::new);
 
-        birthDeathReportPK.setReportResidentNo(resident.getResidentNo());
 
         birthDeathReport.setBirthDeathReportPK(birthDeathReportPK);
 
-        return deathReportRepository.save(birthDeathReport);
+         deathReportRepository.flush();
     }
 
     @Transactional
     @Override
-    public void deleteDeath(Integer reportSerialNo, Integer targetSerialNo) {
+    public void deleteDeath(Integer serialNo, Integer targetSerialNo) {
         BirthDeathReportPK pk = new BirthDeathReportPK();
-        pk.setReportResidentNo(reportSerialNo);
+        pk.setReportResidentNo(targetSerialNo);
         pk.setBirthDeathCode("사망");
-        pk.setResidentNo(targetSerialNo);
+        pk.setResidentNo(serialNo);
 
         BirthDeathReport birthDeathReport =
             deathReportRepository.findById(pk).orElseThrow(NoReportException::new);

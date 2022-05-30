@@ -49,7 +49,7 @@ public class FamilyRelationshipController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/relationship/{familySerialNumber}")
-    public FamilyRelationship fixRelationship(@ModelAttribute("relationship") Integer serialNo,
+    public void fixRelationship(@ModelAttribute("relationship") Integer serialNo,
                                               @PathVariable("familySerialNumber") Integer fmSerialNo,
                                               @Valid @RequestBody FamilyRelationshipModify familyRelationshipModify,
                                               BindingResult bindingResult) {
@@ -57,12 +57,12 @@ public class FamilyRelationshipController {
             throw new ValidationException();
         }
 
-        return service.modifyRelationship(serialNo, fmSerialNo, familyRelationshipModify);
+        service.modifyRelationship(serialNo, fmSerialNo, familyRelationshipModify);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/relationship/{familySerialNumber}")
-    public void deleteRelationship(@ModelAttribute("relatinship") Integer serialNo,
+    public void deleteRelationship(@ModelAttribute("relationship") Integer serialNo,
                                    @PathVariable("familySerialNumber") Integer fmSerialNo) {
         service.deleteRelationship(serialNo, fmSerialNo);
     }

@@ -1,29 +1,30 @@
 package com.nhnacademy.certificate.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class DeathRegister {
+
     @NotNull
-    @Min(2)
     String residentName;
 
     String residentRegistrationNo;
 
     @NotNull
-    LocalDateTime deathReportDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    LocalDate deathReportDate;
 
-    @Min(1)
     @NotNull
     String qualificationCode;
 
-    @Email
     String email;
 
     String phone;
@@ -32,5 +33,6 @@ public class DeathRegister {
 
     String deathPlaceAddress;
 
+    @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     LocalDateTime deathDate;
 }

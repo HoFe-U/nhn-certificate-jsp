@@ -1,6 +1,7 @@
 package com.nhnacademy.certificate.entity;
 
 import com.nhnacademy.certificate.entity.pk.BirthDeathReportPK;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -27,7 +28,7 @@ public class BirthDeathReport {
     @JoinColumn(name = "resident_serial_number")
     private Resident resident;
     @Column(name = "birth_death_report_date")
-    private LocalDateTime birthDeathReportDate;
+    private LocalDate birthDeathReportDate;
 
     @Column(name = "birth_report_qualifications_code")
     private String birthQualificationCode;

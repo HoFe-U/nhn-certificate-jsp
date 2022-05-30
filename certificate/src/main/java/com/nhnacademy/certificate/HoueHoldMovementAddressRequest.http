@@ -1,0 +1,7 @@
+###
+POST http://localhost/household/1/movement HTTP/1.1
+Content-Type: application/json
+
+{
+
+}

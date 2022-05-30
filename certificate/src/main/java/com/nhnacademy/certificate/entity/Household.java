@@ -1,5 +1,6 @@
 package com.nhnacademy.certificate.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Column;
@@ -23,15 +24,15 @@ public class Household {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "household_serial_number")
     private Integer householdSerialNumber;
 
     @ManyToOne
-    @JoinColumn(name = "resident_serial_number")
+    @JoinColumn(name = "household_resident_serial_number")
     public Resident resident;
 
     @Column(name = "household_composition_date")
-    @Temporal(TemporalType.DATE)
-    private Date compositionDate;
+    private LocalDate compositionDate;
 
     @Column(name = "household_composition_reason_code")
     private String compositionCode;

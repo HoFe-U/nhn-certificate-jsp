@@ -1,5 +1,6 @@
 package com.nhnacademy.certificate.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,13 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "resident")
 public class Resident {
 
@@ -23,6 +26,7 @@ public class Resident {
     @Column(name = "resident_serial_number")
     private Integer residentNo;
 
+    @Column(name = "name")
     private String name;
 
     @Column(name = "resident_registration_number")

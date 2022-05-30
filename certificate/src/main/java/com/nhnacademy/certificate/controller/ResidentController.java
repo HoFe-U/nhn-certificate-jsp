@@ -33,12 +33,12 @@ public class ResidentController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{serialNumber}")
-    public Resident fixResidentInfo(@PathVariable Integer serialNumber,
+    public void fixResidentInfo(@PathVariable Integer serialNumber,
                                     @Valid ModifyResidentRequest residentRequest,
                                     BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             throw new ModifyResidentException();
         }
-        return service.modifyResident(residentRequest, serialNumber);
+        service.modifyResident(residentRequest, serialNumber);
     }
 }

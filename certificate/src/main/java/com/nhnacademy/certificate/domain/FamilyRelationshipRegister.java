@@ -6,8 +6,10 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
 public class FamilyRelationshipRegister {
@@ -17,6 +19,4 @@ public class FamilyRelationshipRegister {
     @Size(min = 1,max = 6)
     @NotNull
     String relationship;
-
-
 }

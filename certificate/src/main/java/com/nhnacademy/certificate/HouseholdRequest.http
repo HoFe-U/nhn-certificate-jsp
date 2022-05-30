@@ -1,0 +1,14 @@
+###
+POST http://localhost:8081/hosehold HTTP/1.1
+Content-Type: application/json
+
+{
+  "houseHoldName": "박한나",
+  "houseHoldRegistrationNo": "551022-1234563",
+  "compositionDate": "1999-04-12",
+  "compositionCode": "세대분리",
+  "movementAddress": "마산"
+}
+
+###
+DELETE http://localhost:8081/hosehold/1 HTTP/1.1

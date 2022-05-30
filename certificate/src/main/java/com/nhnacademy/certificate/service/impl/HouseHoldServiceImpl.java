@@ -10,7 +10,9 @@ import com.nhnacademy.certificate.repository.HouseholdMovementAddressRepository;
 import com.nhnacademy.certificate.repository.HouseholdRepository;
 import com.nhnacademy.certificate.repository.ResidentRepository;
 import com.nhnacademy.certificate.service.HouseholdService;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class HouseHoldServiceImpl implements HouseholdService {
@@ -28,11 +30,10 @@ public class HouseHoldServiceImpl implements HouseholdService {
         this.residentRepository = residentRepository;
     }
 
-
+    @Transactional
     @Override
     public Household createHousehold(HouseholdRegister householdRegister) {
         //TODO : household 예외 처리해야하나 ??
-
         Resident resident =
             residentRepository.checkResidentExist(householdRegister.getHouseHoldName(),
                     householdRegister.getHouseHoldRegistrationNo())
@@ -41,16 +42,19 @@ public class HouseHoldServiceImpl implements HouseholdService {
         Household household = new Household();
         household.setResident(resident);
         household.setCompositionCode(householdRegister.getCompositionCode());
-        household.setCurrentHouseMovementAddress(household.getCurrentHouseMovementAddress());
         household.setCompositionDate(householdRegister.getCompositionDate());
+        household.setCurrentHouseMovementAddress(householdRegister.getMovementAddress());
 
         return householdRepository.save(household);
     }
 
+    @Modifying
+    @Transactional
     @Override
     public void deleteHousehold(Integer serialNo) {
         Household household =
             householdRepository.findById(serialNo).orElseThrow(NoHouseholdException::new);
+
         householdRepository.delete(household);
     }
 

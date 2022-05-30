@@ -37,19 +37,18 @@ public class BirthController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public BirthDeathReport addBirthReport(@ModelAttribute("birth") Integer serialNo,
-                                              @Valid @RequestBody
-                                                  BirthRegister birthDeathReportRegister,
+                                              @Valid @RequestBody BirthRegister register,
                                               BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationException();
         }
 
-        return service.createBirth(serialNo, birthDeathReportRegister);
+        return service.createBirth(serialNo, register);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{targetSerialNumber}")
-    public BirthDeathReport fixBirthReport(@ModelAttribute("birth") Integer serialNo,
+    public void fixBirthReport(@ModelAttribute("birth") Integer serialNo,
                                @PathVariable("targetSerialNumber") Integer targetSerialNo,
                                @Valid @RequestBody BirthDeathModify birthModify,
                                BindingResult bindingResult) {
@@ -57,7 +56,7 @@ public class BirthController {
         if (bindingResult.hasErrors()) {
             throw new ValidationException();
         }
-        return service.modifyBirth(serialNo, birthModify, targetSerialNo);
+        service.modifyBirth(serialNo, birthModify, targetSerialNo);
     }
 
     @ResponseStatus(HttpStatus.OK)

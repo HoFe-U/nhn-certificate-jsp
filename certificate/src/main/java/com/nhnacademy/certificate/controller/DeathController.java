@@ -55,7 +55,7 @@ public class DeathController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{targetSerialNumber}")
-    public BirthDeathReport fixDeathReport(@ModelAttribute("death") Integer serialNo,
+    public void fixDeathReport(@ModelAttribute("death") Integer serialNo,
                                            @PathVariable("targetSerialNumber")
                                                Integer targetSerialNo,
                                            @Valid @RequestBody BirthDeathModify birthModify,
@@ -64,7 +64,7 @@ public class DeathController {
         if (bindingResult.hasErrors()) {
             throw new ValidationException();
         }
-        return service.modifyDeath(serialNo, birthModify, targetSerialNo);
+        service.modifyDeath(serialNo, birthModify, targetSerialNo);
     }
 
     @ResponseStatus(HttpStatus.OK)
