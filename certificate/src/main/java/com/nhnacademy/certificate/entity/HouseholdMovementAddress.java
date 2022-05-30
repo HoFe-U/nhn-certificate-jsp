@@ -21,9 +21,10 @@ public class HouseholdMovementAddress {
 
     @ManyToOne
     @MapsId("houseHoldNo")
-    @JoinColumn(name = "householdSerialNumber")
+    @JoinColumn(name = "household_serial_number")
     public Household household;
 
+    @Column(name = "house_movement_address")
     private String houseMovementAddress;
 
     @Column(name = "last_address_yn")

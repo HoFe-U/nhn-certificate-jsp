@@ -8,7 +8,11 @@ import com.nhnacademy.certificate.entity.pk.HouseHoldMovementAddressPk;
 import com.nhnacademy.certificate.exception.NoMovementAddressException;
 import com.nhnacademy.certificate.repository.HouseholdMovementAddressRepository;
 import com.nhnacademy.certificate.service.HouseholdMovementAddressService;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +20,7 @@ public class HouseHoldMovementServiceImpl implements HouseholdMovementAddressSer
     private final HouseholdMovementAddressRepository movementAddressRepository;
 
     public HouseHoldMovementServiceImpl(
-        HouseholdMovementAddressRepository movementAddressRepository) {
+            HouseholdMovementAddressRepository movementAddressRepository) {
         this.movementAddressRepository = movementAddressRepository;
     }
 
@@ -29,8 +33,15 @@ public class HouseHoldMovementServiceImpl implements HouseholdMovementAddressSer
         pk.setHouseHoldNo(household.getHouseholdSerialNumber());
         pk.setHouseMovementReportDate(movementAddressRequest.getReportDate());
 
-        movementAddressRepository.findByLastAddress("Y").setLastAddress("N");
-        address.setLastAddress("Y");
+        List<HouseholdMovementAddress> addresses = movementAddressRepository.findByLastAddressEquals(movementAddressRequest.getReportDate());
+        if(!addresses.isEmpty()){
+            address.setLastAddress("N");
+        }else{
+            address.setLastAddress("Y");
+            for (HouseholdMovementAddress householdMovementAddress : addresses) {
+                address.setLastAddress("N");
+            }
+        }
         address.setHousehold(household);
         address.setHoldMovementAddress(pk);
         address.setHouseMovementAddress(movementAddressRequest.getMovementAddress());
@@ -38,28 +49,28 @@ public class HouseHoldMovementServiceImpl implements HouseholdMovementAddressSer
     }
 
     @Override
-    public HouseholdMovementAddress modifyHouseholdMovementAddress(Household household,
-                                                                   LocalDateTime dateTime,
+    public void modifyHouseholdMovementAddress(Household household,
+                                                                   LocalDate dateTime,
                                                                    ModifyMovementAddress modifyMovementAddress) {
         HouseHoldMovementAddressPk pk = new HouseHoldMovementAddressPk();
         pk.setHouseHoldNo(household.getHouseholdSerialNumber());
         pk.setHouseMovementReportDate(dateTime);
 
         HouseholdMovementAddress address =
-            movementAddressRepository.findById(pk).orElseThrow(NoMovementAddressException::new);
+                movementAddressRepository.findById(pk).orElseThrow(NoMovementAddressException::new);
 
         address.setHouseMovementAddress(modifyMovementAddress.getAddress());
-        return movementAddressRepository.save(address);
+         movementAddressRepository.flush();
     }
 
     @Override
     public void deleteMovementAddress(Household household,
-                                                          LocalDateTime dateTime) {
+                                      LocalDate dateTime) {
         HouseHoldMovementAddressPk pk = new HouseHoldMovementAddressPk();
         pk.setHouseHoldNo(household.getHouseholdSerialNumber());
         pk.setHouseMovementReportDate(dateTime);
         HouseholdMovementAddress address =
-            movementAddressRepository.findById(pk).orElseThrow(NoMovementAddressException::new);
+                movementAddressRepository.findById(pk).orElseThrow(NoMovementAddressException::new);
         movementAddressRepository.delete(address);
     }
 }

@@ -5,6 +5,7 @@ com\nhnacademy\certificate\config\WebAppInitializer.class
 com\nhnacademy\certificate\repository\ResidentRepository.class
 com\nhnacademy\certificate\entity\pk\FamilyRelationShipPk.class
 com\nhnacademy\certificate\entity\FamilyRelationship.class
+com\nhnacademy\certificate\entity\pk\QHouseholdResidentPk.class
 com\nhnacademy\certificate\entity\QHousehold.class
 com\nhnacademy\certificate\entity\QFamilyRelationship.class
 com\nhnacademy\certificate\domain\DeathRegister.class
@@ -21,7 +22,10 @@ com\nhnacademy\certificate\exception\NoReportException.class
 com\nhnacademy\certificate\controller\BirthController.class
 com\nhnacademy\certificate\repository\CertificateIssueRepository.class
 com\nhnacademy\certificate\entity\pk\HouseholdCompositionResidentPK.class
+com\nhnacademy\certificate\entity\QHouseholdResident.class
+com\nhnacademy\certificate\exception\NoMovementAddressException.class
 com\nhnacademy\certificate\entity\QHouseholdMovementAddress.class
+com\nhnacademy\certificate\controller\HouseHoldMovementAddressController.class
 com\nhnacademy\certificate\service\CertificateIssueService.class
 com\nhnacademy\certificate\domain\BirthRegister.class
 com\nhnacademy\certificate\exception\ModifyResidentException.class
@@ -35,6 +39,7 @@ com\nhnacademy\certificate\repository\RepositoryBase.class
 com\nhnacademy\certificate\service\HouseholdCompositionResidentService.class
 com\nhnacademy\certificate\controller\FamilyRelationshipController.class
 com\nhnacademy\certificate\controller\HouseholdController.class
+com\nhnacademy\certificate\domain\HouseHoldMovementAddressRequest.class
 com\nhnacademy\certificate\config\RootConfig.class
 com\nhnacademy\certificate\controller\DeathController.class
 com\nhnacademy\certificate\domain\BirthDeathModify.class
@@ -45,8 +50,9 @@ com\nhnacademy\certificate\service\impl\FamilyRelationshipServiceImpl.class
 com\nhnacademy\certificate\entity\QBirthDeathReport.class
 com\nhnacademy\certificate\exception\NoRelationShip.class
 com\nhnacademy\certificate\entity\pk\HouseHoldMovementAddressPk.class
+com\nhnacademy\certificate\entity\pk\HouseholdResidentPk.class
+com\nhnacademy\certificate\entity\HouseholdResident.class
 com\nhnacademy\certificate\entity\QResident.class
-com\nhnacademy\certificate\entity\Resident$ResidentBuilder.class
 com\nhnacademy\certificate\entity\QCertificateIssue.class
 com\nhnacademy\certificate\service\BirthService.class
 com\nhnacademy\certificate\domain\ResidentRegister.class
@@ -55,6 +61,7 @@ com\nhnacademy\certificate\service\impl\ResidentServiceImpl.class
 com\nhnacademy\certificate\repository\FamilyRelationshipRepository.class
 com\nhnacademy\certificate\service\FamilyRelationshipService.class
 com\nhnacademy\certificate\repository\HouseholdRepository.class
+com\nhnacademy\certificate\domain\ModifyMovementAddress.class
 com\nhnacademy\certificate\repository\HouseholdCompositionResidentRepository.class
 com\nhnacademy\certificate\controller\ResidentController.class
 com\nhnacademy\certificate\entity\pk\QBirthDeathReportPK.class
@@ -67,4 +74,5 @@ com\nhnacademy\certificate\entity\Household.class
 com\nhnacademy\certificate\service\HouseholdMovementAddressService.class
 com\nhnacademy\certificate\service\impl\BirthServiceImpl.class
 com\nhnacademy\certificate\domain\FamilyRelationshipRegister$FamilyRelationshipRegisterBuilder.class
+com\nhnacademy\certificate\service\impl\HouseHoldMovementServiceImpl.class
 com\nhnacademy\certificate\config\WebConfig.class

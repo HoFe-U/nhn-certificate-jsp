@@ -1,5 +1,6 @@
 package com.nhnacademy.certificate.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nhnacademy.certificate.domain.HouseHoldMovementAddressRequest;
 import com.nhnacademy.certificate.domain.ModifyMovementAddress;
 import com.nhnacademy.certificate.entity.Household;
@@ -7,10 +8,14 @@ import com.nhnacademy.certificate.entity.HouseholdMovementAddress;
 import com.nhnacademy.certificate.exception.NoHouseholdException;
 import com.nhnacademy.certificate.service.HouseholdMovementAddressService;
 import com.nhnacademy.certificate.service.HouseholdService;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
+
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,8 +35,7 @@ public class HouseHoldMovementAddressController {
     private final HouseholdService householdService;
 
     public HouseHoldMovementAddressController(
-        HouseholdMovementAddressService service,
-        HouseholdService householdService) {
+            HouseholdMovementAddressService service, HouseholdService householdService) {
 
         this.service = service;
         this.householdService = householdService;
@@ -49,10 +53,10 @@ public class HouseHoldMovementAddressController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public HouseholdMovementAddress addMovementAddress(
-        @ModelAttribute("householdNo") Household household,
-        @Valid @RequestBody
-            HouseHoldMovementAddressRequest movementAddressRequest,
-        BindingResult bindingResult) {
+            @ModelAttribute("householdNo") Household household,
+            @Valid @RequestBody
+                    HouseHoldMovementAddressRequest movementAddressRequest,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationException();
         }
@@ -61,21 +65,21 @@ public class HouseHoldMovementAddressController {
 
     @PutMapping("/{reportDate}")
     @ResponseStatus(HttpStatus.OK)
-    public HouseholdMovementAddress fixMovementAddress(
-        @ModelAttribute("householdNo") Household household,
-        @PathVariable("reportDate") LocalDateTime dateTime,
-        @Valid @RequestBody ModifyMovementAddress modifyMovementAddress,
-        BindingResult bindingResult) {
+    public void fixMovementAddress(
+            @ModelAttribute("householdNo") Household household,
+            @PathVariable("reportDate") LocalDate dateTime,
+            @Valid @RequestBody ModifyMovementAddress modifyMovementAddress,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationException();
         }
-        return service.modifyHouseholdMovementAddress(household, dateTime, modifyMovementAddress);
+        service.modifyHouseholdMovementAddress(household, dateTime, modifyMovementAddress);
     }
 
     @DeleteMapping("/{reportDate}")
     @ResponseStatus(HttpStatus.OK)
     public void removeMovementAddress(@ModelAttribute("householdNo") Household household,
-                                                          @PathVariable("reportDate") LocalDateTime dateTime){
-        service.deleteMovementAddress(household,dateTime);
+                                      @PathVariable("reportDate") LocalDate dateTime) {
+        service.deleteMovementAddress(household, dateTime);
     }
 }
