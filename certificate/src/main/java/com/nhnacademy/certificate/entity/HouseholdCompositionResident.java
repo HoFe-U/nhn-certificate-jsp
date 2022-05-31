@@ -1,6 +1,8 @@
 package com.nhnacademy.certificate.entity;
 
 import com.nhnacademy.certificate.entity.pk.HouseholdCompositionResidentPK;
+import java.time.LocalDate;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -28,5 +30,15 @@ public class HouseholdCompositionResident {
     @ManyToOne
     @JoinColumn(name = "resident_serial_number")
     Resident resident;
+
+    @Column(name = "report_date")
+    private LocalDate reportDate;
+
+    @Column(name = "household_relationship_code")
+    private String relationCode;
+
+    @Column(name = "household_composition_change_reason_code")
+    private String compositionCode;
+
 
 }
