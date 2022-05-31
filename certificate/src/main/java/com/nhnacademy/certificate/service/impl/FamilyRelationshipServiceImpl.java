@@ -2,6 +2,7 @@ package com.nhnacademy.certificate.service.impl;
 
 import com.nhnacademy.certificate.domain.FamilyRelationshipModify;
 import com.nhnacademy.certificate.domain.FamilyRelationshipRegister;
+import com.nhnacademy.certificate.dto.FamilyCertificateDTO;
 import com.nhnacademy.certificate.entity.FamilyRelationship;
 import com.nhnacademy.certificate.entity.Resident;
 import com.nhnacademy.certificate.entity.pk.FamilyRelationShipPk;
@@ -10,6 +11,7 @@ import com.nhnacademy.certificate.exception.NoResidentException;
 import com.nhnacademy.certificate.repository.FamilyRelationshipRepository;
 import com.nhnacademy.certificate.repository.ResidentRepository;
 import com.nhnacademy.certificate.service.FamilyRelationshipService;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,4 +73,5 @@ public class FamilyRelationshipServiceImpl implements FamilyRelationshipService 
         }
         repository.deleteById(pk);
     }
+
 }

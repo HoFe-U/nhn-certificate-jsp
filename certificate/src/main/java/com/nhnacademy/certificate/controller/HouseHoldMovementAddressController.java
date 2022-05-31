@@ -67,7 +67,8 @@ public class HouseHoldMovementAddressController {
     @ResponseStatus(HttpStatus.OK)
     public void fixMovementAddress(
             @ModelAttribute("householdNo") Household household,
-            @PathVariable("reportDate") LocalDate dateTime,
+            @PathVariable("reportDate")
+            @DateTimeFormat(pattern = "yyyyMMdd") LocalDate dateTime,
             @Valid @RequestBody ModifyMovementAddress modifyMovementAddress,
             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -79,7 +80,8 @@ public class HouseHoldMovementAddressController {
     @DeleteMapping("/{reportDate}")
     @ResponseStatus(HttpStatus.OK)
     public void removeMovementAddress(@ModelAttribute("householdNo") Household household,
-                                      @PathVariable("reportDate") LocalDate dateTime) {
+                                      @PathVariable("reportDate")
+                                      @DateTimeFormat(pattern = "yyyyMMdd") LocalDate dateTime) {
         service.deleteMovementAddress(household, dateTime);
     }
 }

@@ -1,0 +1,26 @@
+###
+POST http://localhost:8083/residents/2/birth HTTP/1.1
+Content-Type: application/json
+
+{
+  "residentSeralNo": 4,
+  "reportType": "출생",
+  "brithDate": "1999-05-05",
+  "qualificationCode":"부",
+  "email": "gg@naver.com",
+  "phone": "010-6666-6666"
+}
+
+###
+PUT http://localhost:8083/residents/7/birth/4 HTTP/1.1
+Content-Type: application/json
+
+{
+  "qualificationCode": "모",
+  "email": "ffff@n",
+  "phoneNo" : "000-0000-014"
+}
+
+###
+DELETE http://localhost:8083/residents/7/birth/4 HTTP/1.1
+Content-Type: application/json

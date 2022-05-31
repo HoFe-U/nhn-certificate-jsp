@@ -66,11 +66,12 @@ public class HouseHoldMovementServiceImpl implements HouseholdMovementAddressSer
     @Override
     public void deleteMovementAddress(Household household,
                                       LocalDate dateTime) {
+
         HouseHoldMovementAddressPk pk = new HouseHoldMovementAddressPk();
         pk.setHouseHoldNo(household.getHouseholdSerialNumber());
         pk.setHouseMovementReportDate(dateTime);
         HouseholdMovementAddress address =
-                movementAddressRepository.findById(pk).orElseThrow(NoMovementAddressException::new);
+            movementAddressRepository.findById(pk).orElseThrow(NoMovementAddressException::new);
         movementAddressRepository.delete(address);
     }
 }

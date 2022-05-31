@@ -8,11 +8,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "certificate_issue")
 public class CertificateIssue {
     @Id
@@ -23,8 +26,10 @@ public class CertificateIssue {
     @JoinColumn(name = "resident_serial_number")
     public Resident resident;
 
+    @Column(name = "certificate_type_code")
     private String certificateTypeCode;
 
+    @Column(name = "certificate_issue_date")
     private LocalDateTime certificateIssueDate;
 
 }

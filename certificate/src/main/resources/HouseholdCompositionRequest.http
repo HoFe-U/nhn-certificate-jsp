@@ -1,0 +1,18 @@
+POST http://localhost:8083/household/compositon/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "박한나",
+  "registrationNo": "551022-1234563",
+  "reportDate": "2022-05-31",
+  "code": "부인",
+  "compositionCode": "세대분리"
+}
+###
+DELETE http://localhost:8083/household/compositon/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name":"남기준",
+  "registrationNo": "790510-1234564"
+}

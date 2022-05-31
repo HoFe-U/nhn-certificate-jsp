@@ -2,11 +2,14 @@ package com.nhnacademy.certificate.service.impl;
 
 import com.nhnacademy.certificate.domain.ModifyResidentRequest;
 import com.nhnacademy.certificate.domain.ResidentRegister;
+import com.nhnacademy.certificate.dto.ResidentDTO;
 import com.nhnacademy.certificate.entity.Resident;
 import com.nhnacademy.certificate.exception.NoResidentException;
 import com.nhnacademy.certificate.repository.ResidentRepository;
 import com.nhnacademy.certificate.service.ResidentService;
+import org.springframework.data.domain.Pageable;
 import java.util.Objects;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +55,11 @@ public class ResidentServiceImpl implements ResidentService {
     @Override
     public Resident getResident(Integer serialNo) {
         return residentRepository.findById(serialNo).orElseThrow(NoResidentException::new);
+    }
+
+    @Override
+    public Page<ResidentDTO> getResidents(Pageable pageable) {
+        return residentRepository.findAll(pageable).map(ResidentDTO::new);
     }
 
 }

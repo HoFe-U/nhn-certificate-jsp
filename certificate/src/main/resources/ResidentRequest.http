@@ -1,0 +1,23 @@
+###
+POST http://localhost:8083/residents HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "유호철",
+  "registrationNo" : "111111-4444444",
+  "gender": "남",
+  "birthPlaceCode": "병원",
+  "birthDate": "1997-08-19 07:00:00",
+  "registrationAddress" : "창원시 마산합포구"
+}
+
+###
+PUT http://localhost:8083/residents/8 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "ggggg",
+  "registrationNo": "111111-1111111",
+  "gender": "여",
+  "registrationAddress": "마산시 월영동"
+}
