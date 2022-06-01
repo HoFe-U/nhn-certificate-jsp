@@ -6,20 +6,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@RequestMapping
+
 @Controller
+@RequestMapping
 public class ResidentsController {
     private final ResidentService service;
 
@@ -28,16 +25,15 @@ public class ResidentsController {
         this.service = service;
     }
 
-    @GetMapping(value = {"/","/residents"})
-    public String residentList(Model model, HttpServletRequest request,
+    @GetMapping(value = {"/", "/residents"})
+    public String residentList(Model model,
                                @RequestParam("page") Optional<Integer> page,
-                               @RequestParam("size") Optional<Integer> size){
+                               @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
 
         Page<ResidentDTO> residents =
             service.getResidents(PageRequest.of(currentPage - 1, pageSize));
-
         model.addAttribute("residents", residents);
 
         int totalPages = residents.getTotalPages();

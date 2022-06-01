@@ -2,6 +2,7 @@ package com.nhnacademy.certificate.service;
 
 import com.nhnacademy.certificate.domain.BirthDeathModify;
 import com.nhnacademy.certificate.domain.DeathRegister;
+import com.nhnacademy.certificate.dto.DeathDTO;
 import com.nhnacademy.certificate.entity.BirthDeathReport;
 
 import javax.validation.Valid;
@@ -12,4 +13,6 @@ public interface DeathService {
     void modifyDeath(Integer serialNo, BirthDeathModify birthModify, Integer targetSerialNo);
 
     void deleteDeath(Integer serialNo, Integer targetSerialNo);
+
+    DeathDTO findDeathReport(Integer serialNo, String typeCode);
 }

@@ -3,21 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>주민등록등본</title>
-
     <style>
         table, th, td {
-            width: 100%;
             border: 1px solid black;
         }
-
     </style>
 </head>
 <body>
-<table>
+<table >
     <th colspan="5"><h3>주민등록등본</h3><br>
         발급일 :<span th:text="${certi.certificateIssueDate}"></span><br>
         증명서확인번호 : <span th:text = "${certi.certificateTypeCode}"></span>
     </th>
+    <tr>
+        <td colspan="2">세대주 성명 :</td>
+        <td th:text="${household.name}"></td>
+        <td>세대구성 및 사유일자</td>
+        <td th:text="${household.familyCompositionReason} + ${household.familyCompositionDate}" ></td>
+    </tr>
+    <tr>
+        <td colspan="3">주소</td>
+        <td colspan="2">신고일</td>
+    </tr>
+    <tr th:each="address : ${household.addressList}">
+        <td th:if="${address.lastAddress} == 'Y'">현주소</td>
+        <td th:unless="${address.lastAddress} == 'Y'">前주소</td>
+        <td colspan="2" th:text="${address.movementAddress}"></td>
+        <td colspan="2" th:text="${address.houseReportDate}"></td>
+    </tr>
+    <tr>
+        <td>세대주 관계</td>
+        <td>성명</td>
+        <td>주민등록 번호</td>
+        <td>신고일</td>
+        <td>변동사유</td>
+    </tr>
+    <tr th:each="member : ${members}">
+        <td th:text="${member.compositionCode}"></td>
+        <td th:text="${member.name}"></td>
+        <td th:text="${member.registrationNo}"></td>
+        <td th:text="${member.reportDate}"></td>
+        <td th:text="${member.code}"></td>
+    </tr>
 </table>
+<a href="/residents">홈으로</a>
 </body>
 </html>

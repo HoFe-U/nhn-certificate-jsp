@@ -11,6 +11,7 @@ import com.nhnacademy.certificate.exception.NoResidentException;
 import com.nhnacademy.certificate.repository.HouseholdCompositionResidentRepository;
 import com.nhnacademy.certificate.repository.ResidentRepository;
 import com.nhnacademy.certificate.service.HouseholdCompositionResidentService;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,16 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class HouseHoldCompositionServiceImpl implements HouseholdCompositionResidentService {
     private final HouseholdCompositionResidentRepository compositionResidentRepository;
     private final ResidentRepository residentRepository ;
-    public HouseHoldCompositionServiceImpl(
-        HouseholdCompositionResidentRepository compositionResidentRepository,
-        ResidentRepository residentRepository) {
+
+    public HouseHoldCompositionServiceImpl(HouseholdCompositionResidentRepository compositionResidentRepository, ResidentRepository residentRepository) {
         this.compositionResidentRepository = compositionResidentRepository;
         this.residentRepository = residentRepository;
     }
 
     @Override
-    public HouseholdCompositionResident createCompositionResident(Household household,
-                                                                  HouseholdCompositionRequest request) {
+    public HouseholdCompositionResident createCompositionResident(Household household, HouseholdCompositionRequest request) {
+
         HouseholdCompositionResident compositionResident = new HouseholdCompositionResident();
         Resident resident =
             residentRepository.checkResidentExist(request.getName(), request.getRegistrationNo())
@@ -44,6 +44,7 @@ public class HouseHoldCompositionServiceImpl implements HouseholdCompositionResi
         compositionResident.setResident(resident);
         compositionResident.setHouseholdCompositionResidentPK(pk);
         compositionResident.setRelationCode(request.getCode());
+
         return compositionResidentRepository.save(compositionResident);
     }
 
@@ -64,4 +65,5 @@ public class HouseHoldCompositionServiceImpl implements HouseholdCompositionResi
 
         compositionResidentRepository.delete(compositionResident);
     }
+
 }

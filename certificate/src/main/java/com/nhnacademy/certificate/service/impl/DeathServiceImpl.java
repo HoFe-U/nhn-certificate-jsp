@@ -2,6 +2,9 @@ package com.nhnacademy.certificate.service.impl;
 
 import com.nhnacademy.certificate.domain.BirthDeathModify;
 import com.nhnacademy.certificate.domain.DeathRegister;
+import com.nhnacademy.certificate.dto.DeathDTO;
+import com.nhnacademy.certificate.dto.DeathInfoDTO;
+import com.nhnacademy.certificate.dto.ResidentDTO;
 import com.nhnacademy.certificate.entity.BirthDeathReport;
 import com.nhnacademy.certificate.entity.Resident;
 import com.nhnacademy.certificate.entity.pk.BirthDeathReportPK;
@@ -96,5 +99,15 @@ public class DeathServiceImpl implements DeathService {
             deathReportRepository.findById(pk).orElseThrow(NoReportException::new);
 
         deathReportRepository.delete(birthDeathReport);
+    }
+
+    @Override
+    public DeathDTO findDeathReport(Integer serialNo, String typeCode) {
+        DeathInfoDTO deathInfo = deathReportRepository.findDeathInfo(typeCode, serialNo);
+        Resident resident = residentRepository.findById(deathInfo.getReportNo())
+            .orElseThrow(NoResidentException::new);
+
+
+        return new DeathDTO(deathInfo,new ResidentDTO(resident));
     }
 }

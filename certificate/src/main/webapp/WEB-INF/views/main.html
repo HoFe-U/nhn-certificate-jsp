@@ -5,6 +5,7 @@
     <title>Main</title>
 </head>
 <body>
+<h1>주민 목록</h1>
 <table border="1"width="100%">
     <th>순번</th>
     <th>주민이름</th>
@@ -17,6 +18,9 @@
         <td th:text = "${resident.genderCode}"></td>
         <td><a th:href ="@{/familyRelationShipCertificate(residentNo=${resident.residentNo})}">가족관계증명서</a>
         <a th:href ="@{/registCertification(residentNo=${resident.residentNo})}">주민등록등본</a>
+            <a th:if="${resident.checkBirth}" th:href ="@{/brithReport(residentNo=${resident.residentNo})}">출생신고서</a>
+            <a th:if="${resident.checkDeath}" th:href ="@{/deathReport(residentNo=${resident.residentNo})}">사망신고서</a>
+            <a th:href="@{/certificateList/{residentNo}?size(residentNo = ${resident.residentNo})"></a>
         </td>
 
     </tr>

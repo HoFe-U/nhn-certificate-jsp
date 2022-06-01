@@ -2,6 +2,13 @@ package com.nhnacademy.certificate.service.impl;
 
 import com.nhnacademy.certificate.domain.BirthRegister;
 import com.nhnacademy.certificate.domain.BirthDeathModify;
+import com.nhnacademy.certificate.dto.BirthDTO;
+import com.nhnacademy.certificate.dto.BirthInfoDTO;
+import com.nhnacademy.certificate.dto.DeathDTO;
+import com.nhnacademy.certificate.dto.DeathInfoDTO;
+import com.nhnacademy.certificate.dto.MotherFatherDTO;
+import com.nhnacademy.certificate.dto.MotherFatherInfoDTO;
+import com.nhnacademy.certificate.dto.ResidentDTO;
 import com.nhnacademy.certificate.entity.BirthDeathReport;
 import com.nhnacademy.certificate.entity.Resident;
 import com.nhnacademy.certificate.entity.pk.BirthDeathReportPK;
@@ -77,6 +84,23 @@ public class BirthServiceImpl implements BirthService {
 
         BirthDeathReport birthDeathReport = birthDeathReportRepository.findById(pk).orElseThrow(NoReportException::new);
         birthDeathReportRepository.delete(birthDeathReport);
+    }
+
+    @Override
+    public BirthDTO findBrithReport(Integer serialNo, String code) {
+        BirthInfoDTO birthInfoDTO = birthDeathReportRepository.findBirtInfo(code, serialNo);
+        Resident resident = residentRepository.findById(birthInfoDTO.getReportNo())
+            .orElseThrow(NoResidentException::new);
+
+        return new BirthDTO(birthInfoDTO,new ResidentDTO(resident));
+
+    }
+
+    @Override
+    public MotherFatherInfoDTO findMotherOrFather(Integer serialNo, String type) {
+        MotherFatherDTO motherOrFather =
+            birthDeathReportRepository.findMotherOrFather(serialNo, type);
+        return new MotherFatherInfoDTO(motherOrFather);
     }
 
 }

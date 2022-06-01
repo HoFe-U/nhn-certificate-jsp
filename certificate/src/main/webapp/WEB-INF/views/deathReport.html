@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DeathReport</title>
+</head>
+<style>
+    table,tr,td{
+        border: 1px solid;
+    }
+</style>
+<body>
+<table>
+    <th colspan="5">
+        <h1>사망신고서</h1>
+        신고일 : <span th:text="${death.reportDate}"></span>
+    </th>
+    <tr>
+        <td rowspan="4">사망자</td>
+        <td>성명</td>
+        <td th:text="${death.name}"></td>
+        <td>주민등록 번호</td>
+        <td th:text="${death.registrationNo}"></td>
+    </tr>
+    <tr>
+        <td>사망일시</td>
+        <td colspan="3" th:text="${death.deathDate} + '(사망지 시각: 24시간제로 기제)'"></td>
+    </tr>
+    <tr>
+        <td rowspan="2">사망장소</td>
+        <td colspan="3" th:text="${death.placeCode}"></td>
+    </tr>
+    <tr>
+        <td>주소</td>
+        <td colspan="3" th:text="${death.placeAddress}"></td>
+    </tr>
+    <tr>
+        <td rowspan="3">신고인</td>
+        <td>성명</td>
+        <td th:text="${death.reportResidentName}"></td>
+        <td>주민등록번호</td>
+        <td th:text="${death.reportResidentRegistrationNo}"></td>
+    </tr>
+    <tr>
+        <td>자격</td>
+        <td colspan="3" th:text="${death.code}"></td>
+    </tr>
+    <tr>
+        <td>이메일</td>
+        <td th:text="${death.email}"></td>
+        <td>전화번호</td>
+        <td th:text="${death.phone}"></td>
+    </tr>
+</table>
+</body>
+</html>

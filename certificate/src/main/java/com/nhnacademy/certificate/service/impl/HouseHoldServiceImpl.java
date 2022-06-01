@@ -1,15 +1,21 @@
 package com.nhnacademy.certificate.service.impl;
 
 import com.nhnacademy.certificate.domain.HouseholdRegister;
+import com.nhnacademy.certificate.dto.HouseMovementDTO;
+import com.nhnacademy.certificate.dto.HouseholdDTO;
 import com.nhnacademy.certificate.entity.Household;
 import com.nhnacademy.certificate.entity.HouseholdMovementAddress;
 import com.nhnacademy.certificate.entity.Resident;
+import com.nhnacademy.certificate.entity.pk.HouseHoldMovementAddressPk;
 import com.nhnacademy.certificate.exception.NoHouseholdException;
 import com.nhnacademy.certificate.exception.NoResidentException;
+import com.nhnacademy.certificate.repository.HouseholdCompositionResidentRepository;
 import com.nhnacademy.certificate.repository.HouseholdMovementAddressRepository;
 import com.nhnacademy.certificate.repository.HouseholdRepository;
 import com.nhnacademy.certificate.repository.ResidentRepository;
 import com.nhnacademy.certificate.service.HouseholdService;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,17 +23,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class HouseHoldServiceImpl implements HouseholdService {
     private final HouseholdRepository householdRepository;
-    private final HouseholdMovementAddressRepository movementAddressRepository;
     private final ResidentRepository residentRepository;
+    private final HouseholdCompositionResidentRepository compositionResidentRepository;
+    private final HouseholdMovementAddressRepository movementAddressRepository;
+
 
     public HouseHoldServiceImpl(
         HouseholdRepository householdRepository,
-        HouseholdMovementAddressRepository movementAddressRepository,
-        ResidentRepository residentRepository) {
+        ResidentRepository residentRepository,
+        HouseholdCompositionResidentRepository householdCompositionResidentRepository,
+        HouseholdMovementAddressRepository movementAddressRepository) {
 
         this.householdRepository = householdRepository;
-        this.movementAddressRepository = movementAddressRepository;
         this.residentRepository = residentRepository;
+        this.compositionResidentRepository = householdCompositionResidentRepository;
+        this.movementAddressRepository = movementAddressRepository;
     }
 
     @Transactional
@@ -58,8 +68,29 @@ public class HouseHoldServiceImpl implements HouseholdService {
         householdRepository.delete(household);
     }
 
+
     @Override
     public Household getHousehold(Integer serialNo) {
         return householdRepository.findById(serialNo).orElseThrow(NoHouseholdException::new);
     }
+
+    @Override
+    public HouseholdDTO findHouseholdGetDTO(Integer serialNo) {
+        Resident resident =
+            residentRepository.findById(serialNo).orElseThrow(NoResidentException::new);
+        Household household =
+            compositionResidentRepository.findHouseholdCompositionResident(resident)
+                .orElseThrow(NoResidentException::new);
+        List<HouseholdMovementAddress> list =
+            movementAddressRepository.findByHousehold(household);
+        List<HouseMovementDTO> houseMovementDTOS = new ArrayList<>();
+
+        for (HouseholdMovementAddress address : list) {
+            houseMovementDTOS.add(new HouseMovementDTO(address));
+        }
+
+
+        return new HouseholdDTO(household,houseMovementDTOS);
+    }
+
 }

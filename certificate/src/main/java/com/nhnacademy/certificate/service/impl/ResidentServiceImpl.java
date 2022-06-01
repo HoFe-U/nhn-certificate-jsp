@@ -5,11 +5,12 @@ import com.nhnacademy.certificate.domain.ResidentRegister;
 import com.nhnacademy.certificate.dto.ResidentDTO;
 import com.nhnacademy.certificate.entity.Resident;
 import com.nhnacademy.certificate.exception.NoResidentException;
+import com.nhnacademy.certificate.repository.BirthDeathReportRepository;
 import com.nhnacademy.certificate.repository.ResidentRepository;
 import com.nhnacademy.certificate.service.ResidentService;
-import org.springframework.data.domain.Pageable;
 import java.util.Objects;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +18,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ResidentServiceImpl implements ResidentService {
     private final ResidentRepository residentRepository;
+    private final BirthDeathReportRepository birthDeathrepository;
 
     public ResidentServiceImpl(
-        ResidentRepository residentRepository) {
+        ResidentRepository residentRepository,
+        BirthDeathReportRepository bDrepository) {
         this.residentRepository = residentRepository;
+        birthDeathrepository = bDrepository;
     }
+
 
     @Transactional
     @Override
@@ -59,7 +64,19 @@ public class ResidentServiceImpl implements ResidentService {
 
     @Override
     public Page<ResidentDTO> getResidents(Pageable pageable) {
-        return residentRepository.findAll(pageable).map(ResidentDTO::new);
+        Page<ResidentDTO> map = residentRepository.findAll(pageable).map(ResidentDTO::new);
+        for (ResidentDTO residentDTO : map) {
+            if (birthDeathrepository.
+                existsByBirthDeathReportPK_ResidentNoAndBirthDeathReportPK_BirthDeathCode(
+                    residentDTO.getResidentNo(), "출생")){
+                residentDTO.setCheckBirth(true);
+            }
+            if (birthDeathrepository
+                .existsByBirthDeathReportPK_ResidentNoAndBirthDeathReportPK_BirthDeathCode(
+                    residentDTO.getResidentNo(), "사망")) {
+                residentDTO.setCheckDeath(true);
+            }
+        }
+        return map;
     }
-
 }

@@ -1,5 +1,6 @@
 package com.nhnacademy.certificate.repository;
 
+import com.nhnacademy.certificate.entity.Household;
 import com.nhnacademy.certificate.entity.HouseholdMovementAddress;
 import com.nhnacademy.certificate.entity.pk.HouseHoldMovementAddressPk;
 
@@ -16,4 +17,5 @@ public interface HouseholdMovementAddressRepository
     @Query("select m from HouseholdMovementAddress as m where m.holdMovementAddress.houseMovementReportDate > ?1")
     List<HouseholdMovementAddress> findByLastAddressEquals(LocalDate date);
 
+    List<HouseholdMovementAddress> findByHousehold(Household household);
 }
