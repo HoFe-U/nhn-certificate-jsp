@@ -4,21 +4,24 @@ import com.querydsl.core.annotations.QueryProjection;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Data
+@Getter
 @NoArgsConstructor
 public class FamilyCertificateDTO {
     private Long certificateNo;
     private LocalDateTime localDate;
     private String address;
+    private String typeCode;
 
-    @QueryProjection
-    public FamilyCertificateDTO(
-        Long certificateNo, LocalDateTime localDate, String address) {
+    public FamilyCertificateDTO(Long certificateNo, LocalDateTime localDate, String address, String typeCode) {
         this.certificateNo = certificateNo;
         this.localDate = localDate;
         this.address = address;
+        this.typeCode = typeCode;
     }
+
+
 }

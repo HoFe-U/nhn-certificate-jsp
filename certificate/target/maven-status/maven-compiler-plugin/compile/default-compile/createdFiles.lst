@@ -7,6 +7,7 @@ com\nhnacademy\certificate\domain\DeathRegister.class
 com\nhnacademy\certificate\entity\CertificateIssue.class
 com\nhnacademy\certificate\service\HouseholdService.class
 com\nhnacademy\certificate\service\impl\DeathServiceImpl.class
+com\nhnacademy\certificate\repository\CertificateIssueRepositoryImpl.class
 com\nhnacademy\certificate\service\ResidentService.class
 com\nhnacademy\certificate\entity\HouseholdCompositionResident.class
 com\nhnacademy\certificate\controller\BirthController.class
@@ -43,6 +44,7 @@ com\nhnacademy\certificate\domain\HouseholdRegister.class
 com\nhnacademy\certificate\exception\NoHouseholdException.class
 com\nhnacademy\certificate\exception\NoReportException.class
 com\nhnacademy\certificate\domain\HouseholdCompositionDelete.class
+com\nhnacademy\certificate\repository\CertificateIssueRepositoryCustom.class
 com\nhnacademy\certificate\entity\pk\HouseholdCompositionResidentPK.class
 com\nhnacademy\certificate\entity\QHouseholdResident.class
 com\nhnacademy\certificate\entity\QHouseholdMovementAddress.class
@@ -59,7 +61,6 @@ com\nhnacademy\certificate\config\RootConfig.class
 com\nhnacademy\certificate\controller\DeathController.class
 com\nhnacademy\certificate\domain\BirthDeathModify.class
 com\nhnacademy\certificate\entity\pk\QHouseHoldMovementAddressPk.class
-com\nhnacademy\certificate\repository\impl\FamilyCertificateRepositoryImpl.class
 com\nhnacademy\certificate\service\impl\CertificateServiceImpl.class
 com\nhnacademy\certificate\entity\pk\QHouseholdCompositionResidentPK.class
 com\nhnacademy\certificate\controller\ControllerBase.class
@@ -68,7 +69,6 @@ com\nhnacademy\certificate\entity\QResident.class
 com\nhnacademy\certificate\entity\QCertificateIssue.class
 com\nhnacademy\certificate\service\BirthService.class
 com\nhnacademy\certificate\domain\ResidentRegister.class
-com\nhnacademy\certificate\repository\FamilyCertificateRepositoryCustom.class
 com\nhnacademy\certificate\service\impl\ResidentServiceImpl.class
 com\nhnacademy\certificate\repository\FamilyRelationshipRepository.class
 com\nhnacademy\certificate\service\FamilyRelationshipService.class

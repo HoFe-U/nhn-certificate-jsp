@@ -3,6 +3,7 @@ package com.nhnacademy.certificate.service.impl;
 import com.nhnacademy.certificate.domain.FamilyRelationshipModify;
 import com.nhnacademy.certificate.domain.FamilyRelationshipRegister;
 import com.nhnacademy.certificate.dto.FamilyCertificateDTO;
+import com.nhnacademy.certificate.dto.FamilyRelationshipDto;
 import com.nhnacademy.certificate.entity.FamilyRelationship;
 import com.nhnacademy.certificate.entity.Resident;
 import com.nhnacademy.certificate.entity.pk.FamilyRelationShipPk;
@@ -11,12 +12,15 @@ import com.nhnacademy.certificate.exception.NoResidentException;
 import com.nhnacademy.certificate.repository.FamilyRelationshipRepository;
 import com.nhnacademy.certificate.repository.ResidentRepository;
 import com.nhnacademy.certificate.service.FamilyRelationshipService;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FamilyRelationshipServiceImpl implements FamilyRelationshipService {
+
     private final FamilyRelationshipRepository repository;
     private final ResidentRepository residentRepository;
 
@@ -72,6 +76,22 @@ public class FamilyRelationshipServiceImpl implements FamilyRelationshipService 
             throw new NoRelationShip();
         }
         repository.deleteById(pk);
+    }
+
+    @Override
+    public List<FamilyRelationshipDto> getFamilyCertificateInfo(Integer residentNo) {
+        Resident resident = residentRepository.findById(residentNo).orElseThrow(NoResidentException::new);
+        List<FamilyRelationship> fmailyRs = repository.findAllByFamilyRelationShipPk_BaseResidentNo(residentNo);
+        List<FamilyRelationshipDto> list = new ArrayList<>();
+        list.add(new FamilyRelationshipDto(resident, "본인"));
+
+        for (FamilyRelationship fmaily : fmailyRs) {
+            list.add(new FamilyRelationshipDto(
+                    residentRepository.findById(
+                            fmaily.getFamilyRelationShipPk().getFamilyResidentNo()).orElseThrow(NoResidentException::new),
+                            fmaily));
+        }
+        return list;
     }
 
 }

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>주민등록등본</title>
+
+    <style>
+        table, th, td {
+            width: 100%;
+            border: 1px solid black;
+        }
+
+    </style>
+</head>
+<body>
+<table>
+    <th colspan="5"><h3>주민등록등본</h3><br>
+        발급일 :<span th:text="${certi.certificateIssueDate}"></span><br>
+        증명서확인번호 : <span th:text = "${certi.certificateTypeCode}"></span>
+    </th>
+</table>
+</body>
+</html>

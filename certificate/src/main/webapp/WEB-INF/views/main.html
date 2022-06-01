@@ -9,13 +9,16 @@
     <th>순번</th>
     <th>주민이름</th>
     <th>성별</th>
-
+    <th>증명서</th>
 
     <tr th:each ="resident : ${residents.content}">
         <td th:text = "${resident.residentNo}"></td>
         <td th:text = "${resident.name}"></td>
         <td th:text = "${resident.genderCode}"></td>
-        <td><a th:href ="@{/familyRelationShipCertificate(residentNo=${resident.residentNo})}">가족관계증명서</a></td>
+        <td><a th:href ="@{/familyRelationShipCertificate(residentNo=${resident.residentNo})}">가족관계증명서</a>
+        <a th:href ="@{/registCertification(residentNo=${resident.residentNo})}">주민등록등본</a>
+        </td>
+
     </tr>
 </table>
 

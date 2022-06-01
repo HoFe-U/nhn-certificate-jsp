@@ -22,9 +22,15 @@ public class QHouseholdCompositionResident extends EntityPathBase<HouseholdCompo
 
     public static final QHouseholdCompositionResident householdCompositionResident = new QHouseholdCompositionResident("householdCompositionResident");
 
+    public final StringPath compositionCode = createString("compositionCode");
+
     public final QHousehold household;
 
     public final com.nhnacademy.certificate.entity.pk.QHouseholdCompositionResidentPK householdCompositionResidentPK;
+
+    public final StringPath relationCode = createString("relationCode");
+
+    public final DatePath<java.time.LocalDate> reportDate = createDate("reportDate", java.time.LocalDate.class);
 
     public final QResident resident;
 
