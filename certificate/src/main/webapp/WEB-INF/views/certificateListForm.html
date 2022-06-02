@@ -3,11 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        table,th,tr,td{
+            border: 1px solid;
+        }
+    </style>
 </head>
 <body>
-<table>
-  <th><h1>주민 발급 목록</h1></th>
+    <h1>주민 발급 목록</h1>
+    <table>
+        <th colspan="3">
+            <h1>발급목록</h1>
+        </th>
+        <tr>
+            <td>발급번호</td>
+            <td>발급종류</td>
+            <td>발급일자</td>
+        </tr>
+        <tr th:each ="report : ${reports.content}">
+            <td th:text="${report.certificationNo}"></td>
+            <td th:text="${report.certificateTypeCode}"></td>
+            <td th:text="${report.certificateIssueDate}"></td>
 
-</table>
+        </tr>
+    </table>
+
+    <table>
+        <tr th:if = "${reports.totalPages > 0}">
+            <td th:each = "pageNumber : ${pageNumbers}">
+                <a th:href="@{/certificateList/{residentNo}(residentNo=${residentNo},size=${reports.size}, page =${pageNumber})}"
+                   th:text="${pageNumber}"
+                   th:class="${pageNumber == reports.number + 1} ? active"></a>
+            </td>
+        </tr>
+    </table>
+    <a href="/residents">홈으로</a>
 </body>
 </html>

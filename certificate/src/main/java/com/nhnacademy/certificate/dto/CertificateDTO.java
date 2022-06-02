@@ -20,4 +20,9 @@ public class CertificateDTO {
         this.certificateTypeCode = certificateIssue.getCertificateTypeCode();
         this.certificateIssueDate = certificateIssue.getCertificateIssueDate();
     }
+
+    public CertificateDTO(String code, LocalDateTime time) {
+        this.certificateTypeCode = code;
+        this.certificateIssueDate = time;
+    }
 }

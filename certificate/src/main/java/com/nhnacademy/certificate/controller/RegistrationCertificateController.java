@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/registCertification")
-public class RegistraionCertificateController {
+public class RegistrationCertificateController {
     private final CertificateIssueService certificateIssueService;
     private final HouseholdService householdService;
     private final FamilyRelationshipService familyRelationshipService;
 
-    public RegistraionCertificateController(CertificateIssueService certificateIssueService,
-                                            HouseholdService householdService,
-                                            FamilyRelationshipService familyRelationshipService) {
+    public RegistrationCertificateController(CertificateIssueService certificateIssueService,
+                                             HouseholdService householdService,
+                                             FamilyRelationshipService familyRelationshipService) {
         this.certificateIssueService = certificateIssueService;
         this.householdService = householdService;
         this.familyRelationshipService = familyRelationshipService;
@@ -36,9 +36,9 @@ public class RegistraionCertificateController {
             return "redirect:/residents";
         }
         model.addAttribute("members", members);
-        model.addAttribute("certi", certificateIssueService.findCertificate("주민등록등본"));
+        model.addAttribute("certi", certificateIssueService.findCertificateList(residentNo,"주민등록등본"));
         model.addAttribute("household", householdService.findHouseholdGetDTO(residentNo));
-
+        certificateIssueService.creatCertificateIssue(residentNo,"주민등록등본");
 
         return "registraionCertificate";
     }

@@ -13,6 +13,8 @@ public interface BirthDeathReportRepository extends JpaRepository<BirthDeathRepo
     boolean existsByBirthDeathReportPK_ResidentNoAndBirthDeathReportPK_BirthDeathCode(
         Integer residentNo, String birthDeathCode);
 
+    void deleteBirthDeathReportByBirthDeathReportPK_ResidentNo(Integer residentNo);
+
     @Query("select b.resident.name as name," +
         "b.resident.registrationNo as registrationNo," +
         "b.birthDeathReportPK.birthDeathCode as code," +

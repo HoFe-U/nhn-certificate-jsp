@@ -17,4 +17,6 @@ public interface HouseholdCompositionResidentRepository
 
     @Query("select hcr from FamilyRelationship as f inner join HouseholdCompositionResident as hcr on hcr.resident = f.resident where f.familyRelationShipPk.baseResidentNo = ?1")
     List<HouseholdCompositionResident> findHouseholdMembers(Integer residentNo);
+
+    void deleteByResident_ResidentNo(Integer residentNo);
 }

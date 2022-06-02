@@ -1,4 +1,4 @@
-POST http://localhost:8083/household/compositon/1 HTTP/1.1
+POST http://localhost:8080/household/compositon/1 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
   "compositionCode": "세대분리"
 }
 ###
-DELETE http://localhost:8083/household/compositon/1 HTTP/1.1
+DELETE http://localhost:8080/household/compositon/1 HTTP/1.1
 Content-Type: application/json
 
 {

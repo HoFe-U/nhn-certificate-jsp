@@ -13,4 +13,5 @@ public interface HouseholdService {
 
     HouseholdDTO findHouseholdGetDTO(Integer serialNo);
 
+    boolean checkHouseholder(Integer residentNo);
 }

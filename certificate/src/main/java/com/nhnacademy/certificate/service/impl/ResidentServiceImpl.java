@@ -3,9 +3,16 @@ package com.nhnacademy.certificate.service.impl;
 import com.nhnacademy.certificate.domain.ModifyResidentRequest;
 import com.nhnacademy.certificate.domain.ResidentRegister;
 import com.nhnacademy.certificate.dto.ResidentDTO;
+import com.nhnacademy.certificate.entity.Household;
 import com.nhnacademy.certificate.entity.Resident;
+import com.nhnacademy.certificate.exception.NoHouseholdException;
 import com.nhnacademy.certificate.exception.NoResidentException;
 import com.nhnacademy.certificate.repository.BirthDeathReportRepository;
+import com.nhnacademy.certificate.repository.CertificateIssueRepository;
+import com.nhnacademy.certificate.repository.FamilyRelationshipRepository;
+import com.nhnacademy.certificate.repository.HouseholdCompositionResidentRepository;
+import com.nhnacademy.certificate.repository.HouseholdMovementAddressRepository;
+import com.nhnacademy.certificate.repository.HouseholdRepository;
 import com.nhnacademy.certificate.repository.ResidentRepository;
 import com.nhnacademy.certificate.service.ResidentService;
 import java.util.Objects;
@@ -18,14 +25,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ResidentServiceImpl implements ResidentService {
     private final ResidentRepository residentRepository;
-    private final BirthDeathReportRepository birthDeathrepository;
 
     public ResidentServiceImpl(
         ResidentRepository residentRepository,
-        BirthDeathReportRepository bDrepository) {
+        BirthDeathReportRepository birthDeathrepository) {
         this.residentRepository = residentRepository;
-        birthDeathrepository = bDrepository;
+        this.birthDeathrepository = birthDeathrepository;
     }
+
+    private final BirthDeathReportRepository birthDeathrepository;
+
+
 
 
     @Transactional
@@ -50,6 +60,7 @@ public class ResidentServiceImpl implements ResidentService {
     public void modifyResident(ModifyResidentRequest modify, Integer serialNo) {
         Resident resident =
             residentRepository.findById(serialNo).orElseThrow(NoResidentException::new);
+        //TODO 생성자로 넣어서 처리
         resident.setName(modify.getName());
         resident.setGenderCode(modify.getGender());
         resident.setRegistrationNo(modify.getRegistrationNo());
@@ -79,4 +90,5 @@ public class ResidentServiceImpl implements ResidentService {
         }
         return map;
     }
+
 }

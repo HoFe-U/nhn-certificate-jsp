@@ -43,7 +43,6 @@ public class HouseHoldServiceImpl implements HouseholdService {
     @Transactional
     @Override
     public Household createHousehold(HouseholdRegister householdRegister) {
-        //TODO : household 예외 처리해야하나 ??
         Resident resident =
             residentRepository.checkResidentExist(householdRegister.getHouseHoldName(),
                     householdRegister.getHouseHoldRegistrationNo())
@@ -91,6 +90,18 @@ public class HouseHoldServiceImpl implements HouseholdService {
 
 
         return new HouseholdDTO(household,houseMovementDTOS);
+    }
+
+    @Modifying
+    @Transactional
+    @Override
+    public boolean checkHouseholder(Integer residentNo) {
+        if (householdRepository.existsById(residentNo)) {
+            Household household = householdRepository.findById(residentNo).orElseThrow(NoResidentException::new);
+
+            return compositionResidentRepository.findHouseholdMembers(household.getHouseholdSerialNumber()).size()==1;
+        }
+        return true;
     }
 
 }

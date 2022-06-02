@@ -12,6 +12,4 @@ public interface ResidentRepository extends JpaRepository<Resident, Integer> {
 
     @Query("select r from Resident r where r.name = ?1 and r.registrationNo =?2")
     Optional<Resident> checkResidentExist(String name , String registrationNo);
-//    Page<Resident> getAllBy(Pageable pageable);
-
 }

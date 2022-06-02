@@ -1,11 +1,15 @@
 package com.nhnacademy.certificate.entity;
 
 import com.nhnacademy.certificate.entity.pk.HouseholdResidentPk;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -21,8 +25,9 @@ public class HouseholdResident {
     @JoinColumn(name = "household_serial_number")
     private Household household;
 
+
     @MapsId("residentSerialNo")
     @ManyToOne
-    @JoinColumn(name ="resident_serial_number" )
+    @JoinColumn(name = "resident_serial_number")
     private Resident resident;
 }

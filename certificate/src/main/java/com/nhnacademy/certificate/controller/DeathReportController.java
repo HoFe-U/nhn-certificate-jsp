@@ -1,6 +1,7 @@
 package com.nhnacademy.certificate.controller;
 
 import com.nhnacademy.certificate.dto.DeathDTO;
+import com.nhnacademy.certificate.service.CertificateIssueService;
 import com.nhnacademy.certificate.service.DeathService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,15 +13,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/deathReport")
 public class DeathReportController {
     private final DeathService deathService;
-
-    public DeathReportController(DeathService deathService) {
+    private final CertificateIssueService certificateIssueService;
+    
+    public DeathReportController(DeathService deathService,
+                                 CertificateIssueService certificateIssueService) {
         this.deathService = deathService;
+        this.certificateIssueService = certificateIssueService;
     }
 
     @GetMapping
     public String lookDeathReport(@RequestParam("residentNo") Integer residentNo,
                                   Model model) {
         DeathDTO deathReport = deathService.findDeathReport(residentNo, "사망");
+        certificateIssueService.creatCertificateIssue(residentNo,"사망신고서");
+        
         model.addAttribute("death", deathReport);
 
         return "deathReport";

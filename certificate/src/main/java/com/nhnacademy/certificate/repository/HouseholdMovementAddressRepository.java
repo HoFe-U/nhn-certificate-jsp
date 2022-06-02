@@ -18,4 +18,5 @@ public interface HouseholdMovementAddressRepository
     List<HouseholdMovementAddress> findByLastAddressEquals(LocalDate date);
 
     List<HouseholdMovementAddress> findByHousehold(Household household);
+
 }

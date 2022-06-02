@@ -15,4 +15,5 @@ public interface ResidentService {
     Resident getResident(Integer serialNo);
 
     Page<ResidentDTO> getResidents(Pageable pageable);
+
 }

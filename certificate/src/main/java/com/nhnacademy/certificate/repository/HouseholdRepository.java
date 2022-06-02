@@ -8,4 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface HouseholdRepository extends JpaRepository<Household, Integer> {
     Optional<Household> findByResidentEquals(Resident resident);
 
+    boolean existsByResident_ResidentNo(Integer residentNo);
+
+    void deleteByResident_ResidentNo(Integer residentNo);
+
 }

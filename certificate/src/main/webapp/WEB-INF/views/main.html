@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Main</title>
+    <style>
+        table,th,tr,td{
+            border: 1px solid;
+        }
+    </style>
 </head>
 <body>
 <h1>주민 목록</h1>
-<table border="1"width="100%">
+<table>
     <th>순번</th>
     <th>주민이름</th>
     <th>성별</th>
@@ -20,7 +25,7 @@
         <a th:href ="@{/registCertification(residentNo=${resident.residentNo})}">주민등록등본</a>
             <a th:if="${resident.checkBirth}" th:href ="@{/brithReport(residentNo=${resident.residentNo})}">출생신고서</a>
             <a th:if="${resident.checkDeath}" th:href ="@{/deathReport(residentNo=${resident.residentNo})}">사망신고서</a>
-            <a th:href="@{/certificateList/{residentNo}?size(residentNo = ${resident.residentNo})"></a>
+            <a th:href="@{/certificateList/{residentNo}(residentNo = ${resident.residentNo})}">증명서 발급 목록</a>
         </td>
 
     </tr>

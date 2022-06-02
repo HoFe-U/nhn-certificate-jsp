@@ -28,8 +28,10 @@ public class FamilyCertificateController {
         List<FamilyRelationshipDTO> familyRelationships =
             familyRelationshipService.getFamilyCertificateInfo(residentNo);
 
-        model.addAttribute("certi", service.findCertificate("가족관계증명서"));
+
+        model.addAttribute("certi", service.findCertificateList(residentNo,"가족관계증명서"));
         model.addAttribute("fms", familyRelationships);
+        service.creatCertificateIssue(residentNo, "가족관계증명서");
 
         return "familyCertificate";
     }
